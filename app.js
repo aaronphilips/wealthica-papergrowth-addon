@@ -1,5 +1,3 @@
-var addon, addonOptions;
-
 $(function () {
     
     addon = new Addon();
