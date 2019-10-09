@@ -16,10 +16,13 @@ $(function () {
 
     function loadPaperGrowthDashboard() {
         addon.api.getInstitutions(getQueryFromOptions(addonOptions)).then(institutions => {
-            addonOptions.data = addonOptions.data || {};
+            addonOptions.data = addonOptions.data || {"targetRatios":{"Unallocated" : 1}};
 
-            categoryRatios = getCategoryRatios(institutions);
-            categoryRatiosWithCash = getCategoryRatiosWithCash(institutions);
+            var positions = getPositions(institutions)
+            var categoryRatios = getCategoryRatios(institutions);
+            var categoryRatiosWithCash = getCategoryRatiosWithCash(institutions);
+
+            viewModel.
 
             buildPortfolioTargetTable(categoryRatios)
             buildPortfolioPieChart(categoryRatios);
@@ -28,7 +31,7 @@ $(function () {
     }
 
     $("#save-target").on("click", function () {
-        addonOptions.data[$("#selectedCategory").val()] = $("#newTarget").val() / 100;
+        addonOptions.data["targetRatios"][$("#selectedCategory").val()] = $("#newTarget").val() / 100;
         addon.saveData(addonOptions.data);
     });
 
@@ -68,7 +71,7 @@ $(function () {
         $("#chart-container").empty();
 
         var actualSeriesData = Object.entries(data).map(x => ({ "name": x[0], "y": x[1] }));
-        var targetSeriesData = Object.entries(addonOptions.data).map(x => ({ "name": x[0], "y": x[1] }));
+        var targetSeriesData = Object.entries(addonOptions.data["targetRatios"]).map(x => ({ "name": x[0], "y": x[1] }));
         Highcharts.chart("chart-container", {
             chart: {
                 plotBackgroundColor: null,
@@ -214,6 +217,10 @@ $(function () {
         if (empty) {
             $("#balance-tables-container").append("<div class=\"alert alert-light\">Congratulations! You're account is properly balanced.</div>");
         }
+    }
+
+    function getCategoryRatiosWithCash(institutions) {
+        return Enumerable.from(institutions).selectMany(i => i.investments).selectMany(i => i.positions).toArray();
     }
 
     function getCategoryRatiosWithCash(institutions) {

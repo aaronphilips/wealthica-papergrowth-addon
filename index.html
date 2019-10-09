@@ -56,6 +56,27 @@
     </div>
   </div>
 
+  <div class="modal fade" id="addTargetModal" tabindex="-1" role="dialog" aria-labelledby="addTargetModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addTargetModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <select data-bind="options: availableCategories"></select>
+          <input type="number" id="target" class="form-control" min="0" max="100">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="save-target" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="modal fade" id="editTargetModal" tabindex="-1" role="dialog" aria-labelledby="editTargetModalLabel"
     aria-hidden="true">
@@ -69,7 +90,7 @@
         </div>
         <div class="modal-body text-center">
           <input type="hidden" id="selectedCategory" value="">
-          <input type="number" id="newTarget" class="form-control min=" 0" max="100">
+          <input type="number" id="newTarget" class="form-control" min="0" max="100">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -81,7 +102,8 @@
 
   <script type="text/javascript" src="https://wealthica.github.io/wealthica.js/dist/addon.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://kit.fontawesome.com/a2ea88a0c5.js"></script>
 
@@ -91,9 +113,13 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-debug.js"></script>
   <script type="text/javascript" src="https://unpkg.com/linq/linq.min.js"></script>
   <script type='text/javascript'>
     var addon, addonOptions;
+    var viewModel = {
+        availableCountries: ko.observableArray([])
+    };
   </script>
   <script src="app.js"></script>
 </body>
